@@ -223,6 +223,7 @@ nbdist/
 !.vscode/tasks.json
 !.vscode/launch.json
 *.code-workspace
+lib/bin/*
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
