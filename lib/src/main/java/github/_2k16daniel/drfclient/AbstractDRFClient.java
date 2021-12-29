@@ -24,7 +24,7 @@ import github._2k16daniel.drfclient.utils.ServiceExceptions;
 import github._2k16daniel.drfclient.utils.StringUtilities;
 
 public abstract class AbstractDRFClient {
-    StringUtilities utils;
+    StringUtilities utils = new StringUtilities();
     ObjectMapper mapper;
     HttpClient client;
     DRFRequestInterceptor requestInterceptor;
@@ -104,18 +104,18 @@ public abstract class AbstractDRFClient {
    }
 
    String paramsCombiner(String path , Map<String, String> param){
-        if (param == null){ return path; }
-        return path + utils.queryBuilder(param);
-   }
+    if (param == null){ return path; }
+    return path + utils.queryBuilder(param);
+}
 
     <T extends HttpUriRequest> T contentTypeJson(T uriRequest) {
         uriRequest.addHeader("Content-Type", ContentType.APPLICATION_JSON.toString());
 	return uriRequest;
     }
 
-    public HttpGet get(String path) { return new HttpGet(path); }
-    public HttpPost post(String path) { return new HttpPost(path); }
-    public HttpPut put(String path) { return new HttpPut(path); }
-    public HttpDelete delete(String path) { return new HttpDelete(path);}
+    protected HttpGet absGet(String path) { return new HttpGet(path); }
+    protected HttpPost absPost(String path) { return new HttpPost(path); }
+    protected HttpPut absHttpPut(String path) { return new HttpPut(path); }
+    protected HttpDelete absDelete(String path) { return new HttpDelete(path);}
 
 }

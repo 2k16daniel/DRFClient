@@ -52,9 +52,9 @@ public class DRFClientBuilder {
         return buildRestCLient(this, DRFClass);
     }
 
-    private <T extends DRFClient> T buildRestCLient(DRFClientBuilder builder, Class<T> DRFClientCLass){
+    public <T extends DRFClient> T buildRestCLient(DRFClientBuilder builder, Class<T> DRFClientCLass){
         try{
-            Constructor<T> constructThis = DRFClientCLass.getDeclaredConstructor(DRFClientCLass);
+            Constructor<T> constructThis = DRFClientCLass.getDeclaredConstructor(DRFClientBuilder.class);
             constructThis.setAccessible(true);
             return constructThis.newInstance(builder);
         }
