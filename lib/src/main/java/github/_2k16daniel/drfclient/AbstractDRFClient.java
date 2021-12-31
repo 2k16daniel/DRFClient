@@ -103,7 +103,7 @@ public abstract class AbstractDRFClient {
         return 201;
    }
 
-   String paramsCombiner(String path , Map<String, String> param){
+   public String paramsCombiner(String path , Map<String, String> param){
     if (param == null){ return path; }
     return path + utils.queryBuilder(param);
 }
