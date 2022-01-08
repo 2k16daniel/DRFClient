@@ -30,16 +30,19 @@ public abstract class AbstractDRFClient {
     DRFRequestInterceptor requestInterceptor;
     private final Logger logger = LoggerFactory.getLogger(getClass());
     // Constructor
-
+    public static DRFClientBuilder build(){
+        return new DRFClientBuilder();
+    }
     protected AbstractDRFClient(DRFClientBuilder builder){
         this.mapper = builder.mapper;
         this.client = builder.client;
         this.requestInterceptor = builder.intercept;
     }
-
-    public static DRFClientBuilder build(){
-        return new DRFClientBuilder();
-    }
+    
+    protected HttpGet absGet(String path) { return new HttpGet(path); }
+    protected HttpPost absPost(String path) { return new HttpPost(path); }
+    protected HttpPut absHttpPut(String path) { return new HttpPut(path); }
+    protected HttpDelete absDelete(String path) { return new HttpDelete(path);}
 
     public <T> T attachToObject(String dataSource, Class<T> thisClass)throws IOException{
         return mapper.readValue(dataSource, thisClass);
@@ -83,14 +86,23 @@ public abstract class AbstractDRFClient {
         catch (Exception ex){throw new ServiceExceptions(ex, myresponse); }
 
         int requestStatus = myresponse.getStatusLine().getStatusCode();
+
         if (requestStatus < 400 && requestStatus >= 200) {
-            logger.info("[" + requestStatus + "] The data was successfully sent " + method + " " + uri);
-        } else {
-            logger.error("[" + requestStatus + "] Sending Failed " + method + " " + uri);
+            logger.info("[" + requestStatus + "] HTTP request was sent succesfuly [" + method + "] =>" + uri);
+            if (requestStatus == 204) {
+                StringBuilder sb = new StringBuilder("HTTP ");
+                sb.append("Request was sent succesfuly but no content recieved from server | Status ").append(requestStatus);
+                logger.warn(sb.toString());
+            }  
         }
-        if (code_ok != requestStatus) {
-            StringBuilder sb = new StringBuilder("Status of " + requestStatus);
-            sb.append(" not equal to expected value of ").append(code_ok);
+        else {
+            logger.error(method+" "+ uri + " "+ requestStatus );
+            logger.error("URL not found!");
+        }
+
+        if (requestStatus > 400 && requestStatus < 500){
+            StringBuilder sb = new StringBuilder("BAD REQUEST! [" + requestStatus);
+            sb.append("] Expected response is ").append(code_ok);
             throw new ServiceExceptions(sb.toString(), myresponse);
         }
         return myresponse;
@@ -106,16 +118,10 @@ public abstract class AbstractDRFClient {
    public String paramsCombiner(String path , Map<String, String> param){
     if (param == null){ return path; }
     return path + utils.queryBuilder(param);
-}
+    }
 
     <T extends HttpUriRequest> T contentTypeJson(T uriRequest) {
         uriRequest.addHeader("Content-Type", ContentType.APPLICATION_JSON.toString());
 	return uriRequest;
     }
-
-    protected HttpGet absGet(String path) { return new HttpGet(path); }
-    protected HttpPost absPost(String path) { return new HttpPost(path); }
-    protected HttpPut absHttpPut(String path) { return new HttpPut(path); }
-    protected HttpDelete absDelete(String path) { return new HttpDelete(path);}
-
 }

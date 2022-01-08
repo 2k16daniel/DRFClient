@@ -16,26 +16,6 @@ public class DRFClientBuilder {
     
     DRFClientBuilder(){ /* empty constructor */ }
 
-    public DRFClientBuilder httpclient(HttpClient myclient){
-        this.client = myclient;
-        return this;
-    }
-
-    public DRFClientBuilder objMapper(ObjectMapper mapper){
-        this.mapper = mapper;
-        return this;
-    }
-
-    public DRFClientBuilder requestInterceptor (DRFRequestInterceptor intercept){
-        this.intercept = intercept;
-        return this;
-    }
-
-    public DRFClientBuilder DRFClientCLass(Class<? extends DRFClient> DRFClass){
-        this.DRFClass = DRFClass;
-        return this;
-    }
-
     public DRFClient builder(){
 
         if (DRFClass == null){
@@ -52,11 +32,11 @@ public class DRFClientBuilder {
         return buildRestCLient(this, DRFClass);
     }
 
-    public <T extends DRFClient> T buildRestCLient(DRFClientBuilder builder, Class<T> DRFClientCLass){
+    public DRFClient buildRestCLient(DRFClientBuilder builder, Class DRFClientCLass){
         try{
-            Constructor<T> constructThis = DRFClientCLass.getDeclaredConstructor(DRFClientBuilder.class);
+            Constructor constructThis = DRFClientCLass.getDeclaredConstructor(DRFClientBuilder.class);
             constructThis.setAccessible(true);
-            return constructThis.newInstance(builder);
+            return (DRFClient) constructThis.newInstance(builder);
         }
         catch (Exception error){
             throw new RuntimeException(error);
