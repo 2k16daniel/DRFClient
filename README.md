@@ -18,7 +18,7 @@ mycustomer = client.retrieve(URL,null,Customer.class);
 
 ```
 
-  #### Working with list of objects
+  #### Working with list of objects 
 
 ```java
 String endpoint = "http://Link-to-your-web/api"
