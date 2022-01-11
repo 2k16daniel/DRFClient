@@ -97,26 +97,15 @@ public class DRFClient extends AbstractDRFClient {
         return IOUtils.toString(dataResponse.getEntity().getContent(), StandardCharsets.UTF_8);
     }
 
-    public <T> T retrieve(DRFRequestInterceptor interceptor, String uri, Map<String, String> queryParams, Class<T> entityClass)
-            throws ServiceExceptions, IOException {
-        return retrieve(interceptor, uri, queryParams, entityClass, 200);
-    }
-
     public <T> T retrieve(String uri, Map<String, String> queryParams, Class<T> entityClass)
             throws ServiceExceptions, IOException {
         return retrieve(null, uri, queryParams, entityClass, 200);
     }
 
-    public <T> List<T> retrieve(DRFRequestInterceptor interceptor, String uri, Map<String, String> queryParams,
-            TypeReference<List<T>> type) throws ServiceExceptions, IOException {
-        return retrieve(interceptor, uri, queryParams, type, 200);
-    }
-
-
     public <T> List<T> retrieve(String uri, Map<String, String> queryParams, TypeReference<List<T>> type)
             throws ServiceExceptions, IOException {
         return retrieve(null, uri, queryParams, type, 200);
-    }    
+    }
 
     public Header send(String uri, Object object) throws ServiceExceptions, IOException {
         return send(null, uri, object, 201);
@@ -130,15 +119,7 @@ public class DRFClient extends AbstractDRFClient {
         update(null, uri, data, 200);
     }
 
-    public void update(String uri, List<?> data, int httpStatus) throws ServiceExceptions, IOException {
-        update(null, uri, data, httpStatus);
-    }
-
     public void update(String uri, Object obj) throws ServiceExceptions, IOException {
     update(null, uri, obj, 200);
-    }
-
-    public void update(String uri, Object data, int httpStatus) throws ServiceExceptions, IOException {
-    update(null, uri, data, httpStatus);
     }
 }

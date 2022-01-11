@@ -12,9 +12,14 @@ public class DRFClientBuilder {
     public HttpClient client;
     public ObjectMapper mapper;
     public DRFRequestInterceptor intercept;
-    public Class<? extends DRFClient> DRFClass;
+    Class<? extends DRFClient> DRFClass;
     
     DRFClientBuilder(){ /* empty constructor */ }
+
+    public DRFClientBuilder putInterceptor(DRFRequestInterceptor interceptor) {
+        this.intercept = interceptor;
+        return this;
+        }
 
     public DRFClient builder(){
 
@@ -28,11 +33,10 @@ public class DRFClientBuilder {
         if (client == null){
             client = HttpClientBuilder.create().useSystemProperties().build();
         }
-
         return buildRestCLient(this, DRFClass);
     }
 
-    public DRFClient buildRestCLient(DRFClientBuilder builder, Class DRFClientCLass){
+    private DRFClient buildRestCLient(DRFClientBuilder builder, Class DRFClientCLass){
         try{
             Constructor constructThis = DRFClientCLass.getDeclaredConstructor(DRFClientBuilder.class);
             constructThis.setAccessible(true);

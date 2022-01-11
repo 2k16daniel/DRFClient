@@ -33,6 +33,7 @@ public abstract class AbstractDRFClient {
     public static DRFClientBuilder build(){
         return new DRFClientBuilder();
     }
+
     protected AbstractDRFClient(DRFClientBuilder builder){
         this.mapper = builder.mapper;
         this.client = builder.client;
@@ -106,13 +107,6 @@ public abstract class AbstractDRFClient {
             throw new ServiceExceptions(sb.toString(), myresponse);
         }
         return myresponse;
-   }
-    
-   int successCode(String httpMethod){
-        if (!httpMethod.equalsIgnoreCase("POST")){
-            return 200;
-        }
-        return 201;
    }
 
    public String paramsCombiner(String path , Map<String, String> param){
