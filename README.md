@@ -12,7 +12,7 @@ Customer mycustomer = new Customer();
 
 DRFClient client = DRFClient.build.builder(); // construct the DRFClient first
 
-// retrieve the data then serialize it into your mycustomer class.
+// this method will retrieve a serialized data from server then returned into mycustomer class
 mycustomer = client.retrieve(URL,null,Customer.class);
 // after that you may now use your POJO for displaying data into your UI.
 
