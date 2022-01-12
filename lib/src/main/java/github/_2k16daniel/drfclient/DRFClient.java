@@ -97,28 +97,84 @@ public class DRFClient extends AbstractDRFClient {
         return IOUtils.toString(dataResponse.getEntity().getContent(), StandardCharsets.UTF_8);
     }
 
+    /**
+     * Method used for retrieving data from server.
+     * 
+     * @param uri : Your base url ex: http://endpoint.io/api/v1/inventory 
+     * @param queryParams : A hashmap object, The hashmap will be converted into parameter form
+     * ex: /client?id=716772711&form=123123123
+     * 
+     * @param entityClass : Your POJO Object 
+     * @return A POJO object and response code
+     * @throws ServiceExceptions : an extended exception class that delivers usefull error log when
+     * Exception was triggered
+     * @throws IOException
+     */
     public <T> T retrieve(String uri, Map<String, String> queryParams, Class<T> entityClass)
             throws ServiceExceptions, IOException {
         return retrieve(null, uri, queryParams, entityClass, 200);
     }
 
+    /**
+     * Method used for retrieving data (multiple)
+     * @param uri : Your base url ex: http://endpoint.io/api/v1/inventory 
+     * @param queryParams : A hashmap object, The hashmap will be converted into parameter form
+     * ex: /client?id=716772711&form=123123123
+     * @param type : Your list of POJO class 
+     * @return : A list of POJO class 
+     * @throws ServiceExceptions : an extended exception class that delivers usefull error log when
+     * Exception was triggered
+     * @throws IOException
+     */
     public <T> List<T> retrieve(String uri, Map<String, String> queryParams, TypeReference<List<T>> type)
             throws ServiceExceptions, IOException {
         return retrieve(null, uri, queryParams, type, 200);
     }
 
+    /**
+     * Method used for sending data. 
+     * @param uri :     Your base url ex: http://endpoint.io/api/v1/inventory 
+     * @param object :  Your POJO class, it will automaticaly serialized to JSON format.
+     * @return  : A response from a server.
+     * @throws ServiceExceptions
+     * @throws IOException
+     */
     public Header send(String uri, Object object) throws ServiceExceptions, IOException {
         return send(null, uri, object, 201);
     }
 
+    /**
+     * Method used for requesting delete
+     * @param uri Your base url ex: http://endpoint.io/api/v1/inventory
+     * @throws ServiceExceptions an extended exception class that delivers usefull error log when
+     * Exception was triggered
+     * 
+     * @throws IOException
+     */
     public void delete(String uri) throws ServiceExceptions, IOException {
         delete(null, uri, 200);
     }
 
+    /**
+     * A method that is used for updating a list of data
+     * @param uri   : Your base url ex: http://endpoint.io/api/v1/inventory
+     * @param data  : Your <List> of POJO class, it will automaticaly serialized to JSON format.
+     * @throws ServiceExceptions : an extended exception class that delivers usefull error log when
+     * Exception was triggered
+     * @throws IOException
+     */
     public void update(String uri, List<?> data) throws ServiceExceptions, IOException {
         update(null, uri, data, 200);
     }
 
+    /**
+     * A method that is used for updating data
+     * @param uri   : Your base url ex: http://endpoint.io/api/v1/inventory
+     * @param data  : Your of POJO class, it will automaticaly serialized to JSON format.
+     * @throws ServiceExceptions : an extended exception class that delivers usefull error log when
+     * Exception was triggered
+     * @throws IOException
+     */
     public void update(String uri, Object obj) throws ServiceExceptions, IOException {
     update(null, uri, obj, 200);
     }
