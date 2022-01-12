@@ -5,12 +5,16 @@
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
  * User Manual available at https://docs.gradle.org/6.7/userguide/building_java_projects.html
  */
+
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
-version       = '1.0'
+
+version       = '1.0-SNAPSHOT'
 
 repositories {
     // Use JCenter for resolving dependencies.
@@ -44,11 +48,30 @@ task javadocJar(type: Jar, dependsOn: alljavadoc) {
     from alljavadoc.destinationDir
 }
 
+task sourcesJar(type: Jar, dependsOn: javadocJar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
 shadowJar {
-  archiveClassifier.set('')
   baseName "io.github.2k16daniel-DRFClient"
   version version
+}
+
+/* uncomment this if you want to build a fat jar
+*   then call the gradle task (shadowjar)
+*
+*    shadowJar.finalizedBy javadocJar
+*    shadowJar.finalizedBy sourcesJar
+*/
+signing {
+  required { gradle.taskGraph.hasTask("publishing") }
+  sign configurations.archives
 }
 
 jar {
@@ -57,4 +80,56 @@ jar {
   }
 }
 
-shadowJar.finalizedBy javadocJar
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'io.github.2k16daniel'
+            artifactId = 'drfclient'
+            version = version
+            from components.java
+
+            pom {
+                name = 'DRFClient'
+                        description = 'A simple Client library for Django rest famework'
+                        url = 'https://github.com/2k16daniel/DRFClient'
+                        licenses {
+                            license {
+                                name = 'GNU General Public License v3.0'
+                                url = 'https://www.gnu.org/licenses/gpl-3.0.html'
+                                    }
+                                }
+                developers {
+                    developer {
+                        id = '2k16daniel'
+                        name = 'Daniel M. Teaño'
+                        email = '2k16daniel@gmail.com'
+                    }
+                }
+                scm {
+                        connection = 'scm:git:https://github.com/2k16daniel/DRFClient.git'
+                        developerConnection = 'scm:git:https://github.com/2k16daniel/DRFClient.git'
+                        url = 'https://github.com/2k16daniel/DRFClient'
+                }   
+            }
+        }
+    }
+
+    repositories {
+        maven {
+                // change URLs to point to your repos, e.g. http://my.org/repo
+            credentials {
+            username "$ossrhUsername"
+            password "$ossrhPassword"
+            }
+            def releasesRepoUrl = uri('https://s01.oss.sonatype.org/service/local/staging/deploy/maven2')
+            def snapshotsRepoUrl = uri('https://s01.oss.sonatype.org/content/repositories/snapshots')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+}
+
+artifacts {
+  archives shadowJar
+  archives javadocJar
+  archives sourcesJar
+}
