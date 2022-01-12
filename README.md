@@ -2,7 +2,22 @@
 DRFClient (Django rest framework client) formerly a libdart_django, A lightweight and user friendly client wrapper library written on Java.
 
 
-###### How to use this library?
+#### Preperation :
+Navigate to release page , and then download the latest Jar.
+After that include the jar into your classpath.<br>
+If youre using gradle , then do something like this
+```gradle
+dependencies {
+    ....
+    api files('deps/io.github.2k16daniel-DRFClient-1.0-all.jar') 
+}
+
+```
+#### Any plan publishing this into maven? :
+I'm already on the edge of publishing this to maven but <br> 
+I'm having a hardtime signing jars with gradle as of now (need help pls)
+I'll update this dont worry
+
 ## Retrieving Data from  server
 
 ```java
