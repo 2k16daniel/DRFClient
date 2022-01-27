@@ -1,5 +1,5 @@
 # DRFClient (libdart_django)
-DRFClient (Django rest framework client) formerly a libdart_django, A lightweight and user friendly client wrapper library written on Java.
+DRFClient (Django rest framework client) A lightweight and user friendly client wrapper library written on Java.
 
 
 #### Preperation :
