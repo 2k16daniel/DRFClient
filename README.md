@@ -2,6 +2,8 @@
 DRFClient (Django rest framework client) A lightweight and user friendly client wrapper library written on Java.
 
 
+#### Requirements :
+Java 11+
 #### Preperation :
 Navigate to release page , and then download the latest Jar.
 After that include the jar into your classpath.<br>
