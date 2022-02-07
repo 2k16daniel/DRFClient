@@ -15,10 +15,6 @@ dependencies {
 }
 
 ```
-#### Any plan publishing this into maven? :
-I'm already on the edge of publishing this to maven but <br> 
-I'm having a hardtime signing jars with gradle as of now (need help pls)
-I'll update this dont worry
 
 ## Retrieving Data from  server
 
