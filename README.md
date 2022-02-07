@@ -15,8 +15,9 @@ dependencies {
 }
 
 ```
+## Documentation :
 
-## Retrieving Data from  server
+#### Retrieving Data from  server
 
 ```java
 String URL = "http://Link-to-your-web/api"
