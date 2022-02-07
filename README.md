@@ -9,7 +9,7 @@ If youre using gradle , then do something like this
 ```gradle
 dependencies {
     ....
-    api files('deps/io.github.2k16daniel-DRFClient-1.0-all.jar') 
+    implementation files('deps/io.github.2k16daniel-DRFClient-1.0-all.jar') 
 }
 
 ```
