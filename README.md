@@ -36,7 +36,7 @@ mycustomer = client.retrieve(URL,null,Customer.class);
 
 ```java
 String endpoint = "http://Link-to-your-web/api"
-DRFClient client = DRFClient.build.builder(); // call the builder method
+DRFClient client = DRFClient.build().builder(); // call the builder method
 
 // let say you have a pojo (Plain Old Java Object) named Customer
  List<Customer> customer = client.retrieve(endpoint, null , new TypeReference<List<Customer>>() {});
@@ -52,7 +52,7 @@ String URL = "http://Link-to-your-web/api"
 // let say you have a pojo (Plain Old Java Object) named Customer
 Customer mycustomer = new Customer();
 
-DRFClient client = DRFClient.build.builder(); // construct the DRFClient first
+DRFClient client = DDRFClient.build().builder(); // construct the DRFClient first
 
 // Pass your pojo directly to send data to server.
 client.send(URL,mycustomer.);
@@ -64,7 +64,7 @@ String URL = "http://Link-to-your-web/api"
 // let say you have a pojo (Plain Old Java Object) named Customer
 Customer mycustomer = ...
 
-DRFClient client = DRFClient.build.builder(); // construct the DRFClient first
+DRFClient client = DRFClient.build().builder(); // construct the DRFClient first
 
 // Pass your pojo directly to update data to server.
 client.update(URL,mycustomer);
@@ -74,7 +74,7 @@ client.update(URL,mycustomer);
 ```java
 String URL = "http://Link-to-your-web/api"
 
-DRFClient client = DRFClient.build.builder(); // construct the DRFClient first
+DRFClient client = DRFClient.build().builder(); // construct the DRFClient first
 
 // Pass your URL to delete() method to delete data from server
 client.delete(URL);
