@@ -1,5 +1,5 @@
 # DRFClient
-A lightweight and user friendly client wrapper library based on Apache http client.
+A lightweight and user friendly client library based on Apache http client.
 
 
 #### Requirements :
